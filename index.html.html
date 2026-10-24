@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FactureCheck – Vérifiez la conformité de vos factures</title>
+<style>
+:root{--bg:#f8f7f3;--card:#fff;--tx:#1b1b19;--mut:#66655f;--bd:#e3e1d9;--ac:#1d4ed8;--acbg:#e6edfc;--ok:#1a7a4c;--ko:#b3361f;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--card:#212120;--tx:#efeee8;--mut:#a5a39b;--bd:#35342f;--ac:#7ba3ff;--acbg:#1d2a4a;--ok:#5fcf97;--ko:#ff9a86;--on:#10131c}}
+:root[data-theme="dark"]{--bg:#151514;--card:#212120;--tx:#efeee8;--mut:#a5a39b;--bd:#35342f;--ac:#7ba3ff;--acbg:#1d2a4a;--ok:#5fcf97;--ko:#ff9a86;--on:#10131c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:900px;margin:0 auto;padding:0 18px}
+header{padding:56px 0 30px;text-align:center}
+.pill{display:inline-block;background:var(--acbg);color:var(--ac);font-size:.8rem;font-weight:600;padding:3px 12px;border-radius:999px}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.15;margin:14px 0 12px}
+header p{color:var(--mut);max-width:600px;margin:0 auto 22px;font-size:1.05rem}
+a.btn,button.btn{display:inline-block;background:var(--ac);color:var(--on);border:0;padding:11px 22px;border-radius:10px;font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+h2{font-size:1.4rem;margin:44px 0 6px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px 18px}
+.sub{color:var(--mut);margin:0 0 14px}
+label{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--bd);cursor:pointer;align-items:flex-start}
+label:first-of-type{border-top:0}
+input[type=checkbox]{margin-top:5px;width:18px;height:18px;accent-color:var(--ac);flex:none}
+label small{display:block;color:var(--mut);font-size:.82rem}
+.new{font-size:.68rem;background:var(--acbg);color:var(--ac);padding:1px 7px;border-radius:999px;margin-left:6px;font-weight:600;vertical-align:middle}
+#res{margin-top:14px;padding:14px;border-radius:10px;background:var(--acbg);font-weight:600}
+#res.ok{color:var(--ok)}#res.ko{color:var(--ko)}
+#miss{margin:8px 0 0;padding-left:20px;font-weight:400;color:var(--tx)}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.price{font-size:1.9rem;font-weight:700;margin:4px 0}
+.price span{font-size:.9rem;font-weight:400;color:var(--mut)}
+ul.f{padding-left:18px;margin:10px 0 16px;color:var(--mut)}
+.hl{border:2px solid var(--ac)}
+.fg{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.fg label{display:block;border:0;padding:0;font-size:.85rem;color:var(--mut)}input[type=text],input[type=date],input[type=number],select{width:100%;margin-top:3px;padding:8px 10px;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:8px}h3{font-size:1rem;margin:18px 0 8px}#pv{white-space:pre-wrap;font:.85rem/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:14px;margin:12px 0 0;overflow-x:auto}#gs{margin-top:12px;font-size:.9rem}#ech p{margin:6px 0}details{border-top:1px solid var(--bd);padding:10px 0}details:first-of-type{border-top:0}summary{cursor:pointer;font-weight:600}details p{color:var(--mut);margin:8px 0 0}.hint{font-size:.82rem;color:var(--mut);margin:8px 0 0}footer{margin:50px 0 30px;color:var(--mut);font-size:.82rem;text-align:center}
+</style>
+</head>
+<body>
+<header class="w">
+<span class="pill">Réforme de la facturation électronique</span>
+<h1>Vos factures sont-elles conformes ? Vérifiez en 30 secondes.</h1>
+<p>FactureCheck contrôle les mentions obligatoires, anciennes et nouvelles, avant que vos clients ne vous renvoient une facture rejetée.</p>
+<a class="btn" href="#outil">Essayer gratuitement</a>
+</header>
+<main class="w">
+<h2 id="outil">Vérificateur gratuit</h2>
+<p class="sub">Cochez les mentions présentes sur votre facture.</p>
+<div class="card">
+<div id="list"></div>
+<div id="res">Cochez les mentions pour voir votre score.</div>
+</div>
+
+<h2>Quelles sont vos échéances ?</h2>
+<p class="sub">Choisissez la taille de votre structure.</p>
+<div class="card"><label style="border:0;display:block;padding:0">Votre structure<select id="sz"><option value="ge">Grande entreprise ou ETI</option><option value="pme" selected>PME ou TPE</option><option value="mic">Micro-entreprise ou indépendant</option></select></label><div id="ech" style="margin-top:10px"></div></div>
+
+<h2>Générateur de facture conforme</h2>
+<p class="sub">Remplissez les champs : l’aperçu intègre les mentions obligatoires et vous signale ce qui manque.</p>
+<div class="card" id="gen"><div class="fg" id="gf"></div>
+<h3>Lignes</h3><div id="gl"></div>
+<div class="fg" style="margin-top:10px"><label>Taux de TVA<select id="tv"><option value="20">20 %</option><option value="10">10 %</option><option value="5.5">5,5 %</option><option value="0">0 % (franchise en base)</option></select></label><label>Catégorie d’opération<select id="ct"><option>Prestation de services</option><option>Livraison de biens</option><option>Mixte</option></select></label></div>
+<label style="border:0"><input type="checkbox" id="db"> TVA sur les débits</label>
+<div id="gs"></div><pre id="pv"></pre><button class="btn" id="dlb" style="display:none;margin-top:12px">Télécharger la facture</button><p class="hint">Le fichier s’ouvre dans votre navigateur : imprimez-le en PDF depuis le menu d’impression.</p></div>
+
+<h2>Tarifs</h2>
+<p class="sub">Tarifs d’exemple, à ajuster selon votre test de marché.</p>
+<div class="g">
+<div class="card"><b>Gratuit</b><div class="price">0 €</div><ul class="f"><li>Vérification manuelle</li><li>Score de conformité</li><li>Générateur de facture (aperçu)</li></ul><a class="btn" href="#outil">Commencer</a></div>
+<div class="card hl"><b>Pro</b><div class="price">9 €<span> / mois</span></div><ul class="f"><li>Import de factures en lot</li><li>Rapports exportables</li><li>Historique des contrôles</li></ul><a class="btn" href="https://geniuspay.ci/product/abonnement-pro-bE2TJu" target="_blank" rel="noopener">Réserver l’accès Pro</a><p class="hint">Fonctions en cours de développement (accès anticipé). Paiement sécurisé via GeniusPay : 6 000 FCFA, par mobile money ou carte.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Liste%20d%E2%80%99attente%20Pro">Ou rejoindre la liste d’attente</a></p></div>
+<div class="card"><b>Équipe</b><div class="price">29 €<span> / mois</span></div><ul class="f"><li>Plusieurs utilisateurs</li><li>Accès API</li><li>Support prioritaire</li></ul><a class="btn" href="https://geniuspay.ci/product/equipe-R6asoS" target="_blank" rel="noopener">Réserver l’accès Équipe</a><p class="hint">Fonctions en cours de développement (accès anticipé). Paiement sécurisé via GeniusPay : 19 000 FCFA, par mobile money ou carte.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Offre%20%C3%89quipe">Une question ? Nous contacter</a></p></div>
+</div>
+<h2>Questions fréquentes</h2>
+<div class="card">
+<details><summary>Qui est concerné par la réforme ?</summary><p>Les entreprises assujetties à la TVA et établies en France. La réception des factures électroniques concerne toutes les entreprises depuis le 1er septembre 2026 ; l’émission suit en 2026 ou 2027 selon la taille.</p></details>
+<details><summary>FactureCheck remplace-t-il une plateforme agréée ?</summary><p>Non. C’est un outil de préparation et de contrôle des mentions. Il ne transmet pas vos factures à l’administration ni à vos clients.</p></details>
+<details><summary>Que deviennent mes données ?</summary><p>Ce que vous saisissez reste dans votre navigateur : rien n’est envoyé à un serveur par cette page.</p></details>
+<details><summary>Les règles peuvent-elles changer ?</summary><p>Oui, le calendrier et les formats ont évolué par le passé. Vérifiez toujours auprès de l’administration fiscale ou de votre expert-comptable.</p></details>
+</div>
+<footer><p><b>Contact</b><br>+225 0778708815 | curycatherine9@gmail.com</p><p>FactureCheck est un outil d’aide à la vérification, pas un conseil juridique ou fiscal.</p></footer>
+</main>
+<script>
+var M=[
+["Date d’émission et numéro unique de facture","",0],
+["Identité du vendeur : nom, adresse, SIREN, forme juridique","",0],
+["Numéro de TVA intracommunautaire du vendeur","",0],
+["Nom et adresse du client","",0],
+["Désignation, quantité et prix unitaire HT de chaque ligne","",0],
+["Taux de TVA et montant de TVA par taux","",0],
+["Total HT et total TTC","",0],
+["Date d’échéance du paiement et conditions d’escompte","",0],
+["Pénalités de retard et indemnité forfaitaire de recouvrement de 40 €","",0],
+["Numéro SIREN du client","Nouvelle mention liée à la réforme",1],
+["Adresse de livraison, si différente de l’adresse de facturation","Nouvelle mention liée à la réforme",1],
+["Catégorie d’opération : livraison de biens, prestation de services ou mixte","Nouvelle mention liée à la réforme",1],
+["Option pour le paiement de la TVA d’après les débits, si applicable","Nouvelle mention liée à la réforme",1]
+];
+var l=document.getElementById("list"),h="";
+M.forEach(function(m,i){h+='<label><input type="checkbox" data-i="'+i+'"><span>'+m[0]+(m[2]?'<span class="new">Nouveau</span>':'')+(m[1]?'<small>'+m[1]+'</small>':'')+'</span></label>'});
+l.innerHTML=h;
+function calc(){
+var c=l.querySelectorAll("input"),n=0,miss=[];
+c.forEach(function(x,i){if(x.checked)n++;else miss.push(M[i][0])});
+var r=document.getElementById("res"),p=Math.round(100*n/M.length);
+if(n===0){r.className="";r.textContent="Cochez les mentions pour voir votre score.";return}
+r.className=miss.length?"ko":"ok";
+r.innerHTML="Score : "+p+" % ("+n+"/"+M.length+")"+(miss.length?"<ul id='miss'><li>"+miss.join("</li><li>")+"</li></ul>":" – Toutes les mentions sont présentes.");
+}
+l.addEventListener("change",calc);
+function $(i){return document.getElementById(i)}
+function ech(){var v=$("sz").value,j=Math.ceil((new Date(2027,8,1)-new Date())/864e5),h="<p>✅ <b>Réception</b> des factures électroniques : obligatoire depuis le 1er septembre 2026.</p>";if(v==="ge"||j<=0)h+="<p>✅ <b>Émission</b> et e-reporting : obligatoires depuis le 1er septembre 2026 pour votre catégorie.</p>";else h+="<p>⏳ <b>Émission</b> et e-reporting : obligatoires le 1er septembre 2027, dans "+j+" jours.</p>";$("ech").innerHTML=h}
+$("sz").onchange=ech;ech();
+var G=[["vn","Votre société","text"],["vs","Votre SIREN","text"],["vt","Votre n° de TVA","text"],["va","Votre adresse","text"],["cn","Client","text"],["cs","SIREN du client","text"],["ca","Adresse du client","text"],["cl","Adresse de livraison (si différente)","text"],["fn","N° de facture","text"],["fd","Date d’émission","date"],["fe","Date d’échéance","date"]],gh="",lh="";
+G.forEach(function(g){gh+='<label>'+g[1]+'<input type="'+g[2]+'" id="'+g[0]+'"></label>'});$("gf").innerHTML=gh;
+for(var i=0;i<3;i++)lh+='<div class="fg" style="margin-bottom:8px"><label>Désignation<input type="text" id="ld'+i+'"></label><label>Quantité<input type="number" id="lq'+i+'" min="0"></label><label>Prix unitaire HT (€)<input type="number" id="lp'+i+'" min="0" step="0.01"></label></div>';$("gl").innerHTML=lh;
+function f(x){return x.toLocaleString("fr-FR",{style:"currency",currency:"EUR"})}
+function gen(){var r=parseFloat($("tv").value),ht=0,L="",m=[],q=[["vn","votre raison sociale"],["vs","votre SIREN"],["va","votre adresse"],["cn","le nom du client"],["cs","le SIREN du client"],["ca","l’adresse du client"],["fn","le numéro de facture"],["fd","la date d’émission"],["fe","la date d’échéance"]];
+q.forEach(function(x){if(!$(x[0]).value.trim())m.push(x[1])});if(r>0&&!$("vt").value.trim())m.push("votre numéro de TVA");
+for(var i=0;i<3;i++){var d=$("ld"+i).value.trim(),n=parseFloat($("lq"+i).value)||0,p=parseFloat($("lp"+i).value)||0;if(d||n||p){ht+=n*p;L+="- "+(d||"(sans désignation)")+" : "+n+" × "+f(p)+" HT = "+f(n*p)+"\n"}}
+if(!L)m.push("au moins une ligne");
+var tva=ht*r/100,v=function(i){return $(i).value.trim()||"…"};
+$("pv").textContent="FACTURE n° "+v("fn")+"\nDate : "+v("fd")+" | Échéance : "+v("fe")+"\n\nVendeur : "+v("vn")+"\n"+v("va")+"\nSIREN : "+v("vs")+(r>0?" | TVA : "+v("vt"):"")+"\n\nClient : "+v("cn")+"\n"+v("ca")+"\nSIREN : "+v("cs")+($("cl").value.trim()?"\nLivraison : "+$("cl").value.trim():"")+"\n\nCatégorie d’opération : "+$("ct").value+"\n\n"+(L||"(aucune ligne)\n")+"\nTotal HT : "+f(ht)+"\nTVA "+r+" % : "+f(tva)+"\nTotal TTC : "+f(ht+tva)+"\n\n"+(r===0?"TVA non applicable, art. 293 B du CGI.\n":"")+($("db").checked?"Option pour le paiement de la TVA d’après les débits.\n":"")+"Escompte pour paiement anticipé : néant.\nPénalités de retard : 3 fois le taux d’intérêt légal.\nIndemnité forfaitaire de recouvrement : 40 €.";
+$("gs").innerHTML=m.length?"<b style='color:var(--ko)'>À compléter : "+m.join(", ")+".</b>":"<b style='color:var(--ok)'>✅ Toutes les mentions obligatoires sont présentes.</b>"}
+$("gen").addEventListener("input",gen);$("gen").addEventListener("change",gen);gen();
+function esc(s){return s.replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
+try{if(window.claude&&claude.use)claude.use("downloads").then(function(d){if(!d)return;var b=$("dlb");b.style.display="inline-block";b.onclick=function(){var n=($("fn").value.trim()||"brouillon").replace(/[^\w-]+/g,"-");d.save({filename:"facture-"+n+".html",data:'<!DOCTYPE html><html lang="fr"><meta charset="utf-8"><title>Facture '+esc(n)+'</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px}pre{white-space:pre-wrap;font:inherit}</style><pre>'+esc($("pv").textContent)+'</pre>'}).catch(function(){})}}).catch(function(){})}catch(e){}
+</script>
+</body>
+</html>
