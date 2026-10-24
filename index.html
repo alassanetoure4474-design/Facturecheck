@@ -2,8 +2,11 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ohK2PuRJa6vWVST0jEmSLx/BlYNcfTStbDwL/XuDIrU='; style-src 'unsafe-inline'; img-src 'self' data:; connect-src 'none'; form-action 'none'; base-uri 'none'; object-src 'none'; frame-src 'none'">
+<meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>FactureCheck – Vérifiez la conformité de vos factures</title>
+<title>Baobill – Vérificateur de factures conformes (facture électronique 2026)</title>
+<meta name="description" content="Vérifiez gratuitement la conformité de vos factures : mentions obligatoires, nouvelles mentions de la facturation électronique 2026-2027, générateur de facture conforme.">
 <style>
 :root{--bg:#f8f7f3;--card:#fff;--tx:#1b1b19;--mut:#66655f;--bd:#e3e1d9;--ac:#1d4ed8;--acbg:#e6edfc;--ok:#1a7a4c;--ko:#b3361f;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#151514;--card:#212120;--tx:#efeee8;--mut:#a5a39b;--bd:#35342f;--ac:#7ba3ff;--acbg:#1d2a4a;--ok:#5fcf97;--ko:#ff9a86;--on:#10131c}}
@@ -33,14 +36,17 @@ label small{display:block;color:var(--mut);font-size:.82rem}
 ul.f{padding-left:18px;margin:10px 0 16px;color:var(--mut)}
 .hl{border:2px solid var(--ac)}
 .fg{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}.fg label{display:block;border:0;padding:0;font-size:.85rem;color:var(--mut)}input[type=text],input[type=date],input[type=number],select{width:100%;margin-top:3px;padding:8px 10px;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:8px}h3{font-size:1rem;margin:18px 0 8px}#pv{white-space:pre-wrap;font:.85rem/1.5 ui-monospace,Menlo,Consolas,monospace;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:14px;margin:12px 0 0;overflow-x:auto}#gs{margin-top:12px;font-size:.9rem}#ech p{margin:6px 0}details{border-top:1px solid var(--bd);padding:10px 0}details:first-of-type{border-top:0}summary{cursor:pointer;font-weight:600}details p{color:var(--mut);margin:8px 0 0}.hint{font-size:.82rem;color:var(--mut);margin:8px 0 0}footer{margin:50px 0 30px;color:var(--mut);font-size:.82rem;text-align:center}
+:root{--ac:#0f766e;--ac2:#1d4ed8;--acbg:#e3f3f0;--sh:0 1px 2px rgba(0,0,0,.05),0 10px 28px rgba(20,30,50,.08)}@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--ac:#5eead4;--ac2:#7ba3ff;--acbg:#12312d;--sh:0 10px 28px rgba(0,0,0,.4)}}html{scroll-behavior:smooth;scroll-padding-top:70px}body{background:radial-gradient(900px 380px at 50% -100px,var(--acbg),transparent 70%),var(--bg)}nav{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--bd)}nav .w{display:flex;align-items:center;justify-content:space-between;height:58px}.brand{font-weight:800;font-size:1.15rem;letter-spacing:-.02em}.brand b{color:var(--ac)}nav a{color:var(--mut);text-decoration:none;font-size:.9rem;margin-left:18px}nav a:hover{color:var(--tx)}nav a.btn{color:var(--on);padding:7px 16px}@media (max-width:620px){.lk{display:none}}h1{letter-spacing:-.03em;background:linear-gradient(90deg,var(--tx),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent}header{padding-top:48px}.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:20px}.chips span{font-size:.8rem;background:var(--card);border:1px solid var(--bd);padding:4px 12px;border-radius:999px;color:var(--mut)}a.btn,button.btn{background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:var(--sh);transition:transform .15s}a.btn:hover,button.btn:hover{transform:translateY(-1px)}h2{font-size:1.6rem;letter-spacing:-.02em;margin-top:56px}h2::after{content:'';display:block;width:36px;height:3px;background:var(--ac);border-radius:3px;margin-top:6px}.card{box-shadow:var(--sh);border-radius:18px;padding:20px 22px}.g .card{position:relative;transition:transform .2s}.g .card:hover{transform:translateY(-3px)}.hl::before{content:'Populaire';position:absolute;top:-12px;left:18px;background:var(--ac);color:var(--on);font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:999px}.price{font-size:2.3rem;letter-spacing:-.03em}ul.f{list-style:none;padding:0}ul.f li{position:relative;padding-left:24px;margin:7px 0}ul.f li::before{content:'✓';position:absolute;left:0;color:var(--ac);font-weight:700}#list label{padding:10px 8px;border-radius:8px}#list label:hover{background:var(--acbg)}#res{border-left:4px solid var(--ac)}footer{border-top:1px solid var(--bd);padding-top:24px;line-height:1.7}footer a{color:var(--ac)}:is(a,button,input,select,summary):focus-visible{outline:2px solid var(--ac);outline-offset:2px}@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{border-top:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}.okc{color:var(--ok)}.koc{color:var(--ko)}code{font-size:.78rem;word-break:break-word}input[type=file]{margin:10px 0}
 </style>
 </head>
 <body>
+<nav><div class='w'><span class='brand'>Bao<b>bill</b></span><span><span class='lk'><a href='#outil'>Vérificateur</a><a href='#generateur'>Générateur</a><a href='#tarifs'>Tarifs</a><a href='#pro'>Espace Pro</a><a href='#faq'>FAQ</a></span><a class='btn' href='#outil'>Essayer</a></span></div></nav>
 <header class="w">
 <span class="pill">Réforme de la facturation électronique</span>
 <h1>Vos factures sont-elles conformes ? Vérifiez en 30 secondes.</h1>
-<p>FactureCheck contrôle les mentions obligatoires, anciennes et nouvelles, avant que vos clients ne vous renvoient une facture rejetée.</p>
-<a class="btn" href="#outil">Essayer gratuitement</a>
+<p>Baobill contrôle les mentions obligatoires, anciennes et nouvelles, avant que vos clients ne vous renvoient une facture rejetée.</p>
+<a class="btn" href="#outil">Essayer gratuitement</a><div class='chips'><span>Gratuit pour commencer</span><span>Données dans votre navigateur</span><span>Réforme 2026-2027</span></div>
 </header>
 <main class="w">
 <h2 id="outil">Vérificateur gratuit</h2>
@@ -54,7 +60,7 @@ ul.f{padding-left:18px;margin:10px 0 16px;color:var(--mut)}
 <p class="sub">Choisissez la taille de votre structure.</p>
 <div class="card"><label style="border:0;display:block;padding:0">Votre structure<select id="sz"><option value="ge">Grande entreprise ou ETI</option><option value="pme" selected>PME ou TPE</option><option value="mic">Micro-entreprise ou indépendant</option></select></label><div id="ech" style="margin-top:10px"></div></div>
 
-<h2>Générateur de facture conforme</h2>
+<h2 id='generateur'>Générateur de facture conforme</h2>
 <p class="sub">Remplissez les champs : l’aperçu intègre les mentions obligatoires et vous signale ce qui manque.</p>
 <div class="card" id="gen"><div class="fg" id="gf"></div>
 <h3>Lignes</h3><div id="gl"></div>
@@ -62,21 +68,28 @@ ul.f{padding-left:18px;margin:10px 0 16px;color:var(--mut)}
 <label style="border:0"><input type="checkbox" id="db"> TVA sur les débits</label>
 <div id="gs"></div><pre id="pv"></pre><button class="btn" id="dlb" style="display:none;margin-top:12px">Télécharger la facture</button><p class="hint">Le fichier s’ouvre dans votre navigateur : imprimez-le en PDF depuis le menu d’impression.</p></div>
 
-<h2>Tarifs</h2>
-<p class="sub">Tarifs d’exemple, à ajuster selon votre test de marché.</p>
+<h2 id='tarifs'>Tarifs</h2>
+<p class='sub'>Choisissez la formule qui vous convient.</p>
 <div class="g">
 <div class="card"><b>Gratuit</b><div class="price">0 €</div><ul class="f"><li>Vérification manuelle</li><li>Score de conformité</li><li>Générateur de facture (aperçu)</li></ul><a class="btn" href="#outil">Commencer</a></div>
-<div class="card hl"><b>Pro</b><div class="price">9 €<span> / mois</span></div><ul class="f"><li>Import de factures en lot</li><li>Rapports exportables</li><li>Historique des contrôles</li></ul><a class="btn" href="https://geniuspay.ci/product/abonnement-pro-bE2TJu" target="_blank" rel="noopener">Réserver l’accès Pro</a><p class="hint">Fonctions en cours de développement (accès anticipé). Paiement sécurisé via GeniusPay : 6 000 FCFA, par mobile money ou carte.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Liste%20d%E2%80%99attente%20Pro">Ou rejoindre la liste d’attente</a></p></div>
-<div class="card"><b>Équipe</b><div class="price">29 €<span> / mois</span></div><ul class="f"><li>Plusieurs utilisateurs</li><li>Accès API</li><li>Support prioritaire</li></ul><a class="btn" href="https://geniuspay.ci/product/equipe-R6asoS" target="_blank" rel="noopener">Réserver l’accès Équipe</a><p class="hint">Fonctions en cours de développement (accès anticipé). Paiement sécurisé via GeniusPay : 19 000 FCFA, par mobile money ou carte.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Offre%20%C3%89quipe">Une question ? Nous contacter</a></p></div>
+<div class="card hl"><b>Pro</b><div class="price">9 €<span> / mois</span></div><ul class="f"><li>Vérification en lot (fichier CSV)</li><li>Rapports exportables</li><li>Historique sur votre appareil</li></ul><a class="btn" href="https://geniuspay.ci/product/abonnement-pro-bE2TJu" target="_blank" rel="noopener noreferrer">Réserver l’accès Pro</a><p class="hint">Paiement sécurisé via GeniusPay : 6 000 FCFA, par mobile money ou carte. Vous recevez ensuite votre code d’accès.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Liste%20d%E2%80%99attente%20Pro">Ou rejoindre la liste d’attente</a></p></div>
+<div class="card"><b>Équipe</b><div class="price">29 €<span> / mois</span></div><ul class="f"><li>Tout le Pro</li><li>Un code partagé par votre équipe</li><li>Support prioritaire</li></ul><a class="btn" href="https://geniuspay.ci/product/equipe-R6asoS" target="_blank" rel="noopener noreferrer">Réserver l’accès Équipe</a><p class="hint">Paiement sécurisé via GeniusPay : 19 000 FCFA, par mobile money ou carte. Vous recevez ensuite votre code d’accès.</p><p class="hint"><a href="mailto:curycatherine9@gmail.com?subject=Offre%20%C3%89quipe">Une question ? Nous contacter</a></p></div>
 </div>
-<h2>Questions fréquentes</h2>
+<h2 id='pro'>Espace Pro : vérification en lot</h2>
+<p class='sub'>Importez un fichier CSV de factures et obtenez un rapport. Réservé aux abonnés : entrez votre code d’accès.</p>
+<div class='card'><div id='lock'><label style='border:0;display:block;font-size:.88rem'>Code d’accès<input type='text' id='ac' autocomplete='off' placeholder='BAO-XXXX-XXXX-XXXX'></label><button class='btn' id='unl' style='margin-top:10px'>Débloquer</button><p class='hint' id='lmsg'></p></div>
+<div id='tool' style='display:none'><p class='hint'>Première ligne du fichier : <code>numero,date,echeance,vendeur_nom,vendeur_siren,vendeur_adresse,client_nom,client_siren,client_adresse,categorie,total_ht,taux_tva,total_ttc</code> (séparateur virgule ou point-virgule).</p><input type='file' id='csv' accept='.csv,text/csv'><div id='rep'></div><button class='btn' id='exp' style='display:none'>Exporter le rapport</button><h3>Historique sur cet appareil</h3><div id='his'></div></div></div>
+<h2 id='faq'>Questions fréquentes</h2>
 <div class="card">
 <details><summary>Qui est concerné par la réforme ?</summary><p>Les entreprises assujetties à la TVA et établies en France. La réception des factures électroniques concerne toutes les entreprises depuis le 1er septembre 2026 ; l’émission suit en 2026 ou 2027 selon la taille.</p></details>
-<details><summary>FactureCheck remplace-t-il une plateforme agréée ?</summary><p>Non. C’est un outil de préparation et de contrôle des mentions. Il ne transmet pas vos factures à l’administration ni à vos clients.</p></details>
+<details><summary>Baobill remplace-t-il une plateforme agréée ?</summary><p>Non. C’est un outil de préparation et de contrôle des mentions. Il ne transmet pas vos factures à l’administration ni à vos clients.</p></details>
+<details><summary>Comment fonctionne l’accès Pro ?</summary><p>Après paiement via GeniusPay, vous recevez un code d’accès personnel. Entrez-le dans l’Espace Pro : il est valable 31 jours sur l’appareil où vous l’activez. Vos fichiers restent dans votre navigateur.</p></details>
 <details><summary>Que deviennent mes données ?</summary><p>Ce que vous saisissez reste dans votre navigateur : rien n’est envoyé à un serveur par cette page.</p></details>
 <details><summary>Les règles peuvent-elles changer ?</summary><p>Oui, le calendrier et les formats ont évolué par le passé. Vérifiez toujours auprès de l’administration fiscale ou de votre expert-comptable.</p></details>
 </div>
-<footer><p><b>Contact</b><br>+225 0778708815 | curycatherine9@gmail.com</p><p>FactureCheck est un outil d’aide à la vérification, pas un conseil juridique ou fiscal.</p></footer>
+<h2 id='mentions'>Mentions légales et confidentialité</h2>
+<div class='card' style='font-size:.92rem'><p><b>Éditeur du site</b> : TOURE ALASSANE<br>Adresse : [à compléter]<br>Immatriculation : [numéro RCCM à compléter]<br>Contact : +225 0778708815 | curycatherine9@gmail.com<br>Directeur de la publication : TOURE ALASSANE</p><p><b>Hébergeur</b> : GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis.</p><p><b>Données personnelles</b> : ce site ne dépose lui-même aucun cookie de suivi et n’utilise aucun outil de statistiques. Ce que vous saisissez dans le vérificateur ou le générateur reste dans votre navigateur. Si vous achetez une offre, le paiement est traité par GeniusPay, qui collecte les informations nécessaires (nom, téléphone, e-mail, moyen de paiement) selon sa propre politique. Pour toute demande, écrivez à curycatherine9@gmail.com.</p><p><b>Avertissement</b> : Baobill est un outil d’aide à la vérification, pas un conseil juridique ou fiscal.</p></div>
+<footer><p><b>Contact</b><br>+225 0778708815 | curycatherine9@gmail.com</p><p><a href='#mentions'>Mentions légales et confidentialité</a></p><p>Baobill est un outil d’aide à la vérification, pas un conseil juridique ou fiscal.</p></footer>
 </main>
 <script>
 var M=[
@@ -123,6 +136,38 @@ $("gs").innerHTML=m.length?"<b style='color:var(--ko)'>À compléter : "+m.join(
 $("gen").addEventListener("input",gen);$("gen").addEventListener("change",gen);gen();
 function esc(s){return s.replace(/[&<>]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;"}[c]})}
 try{if(window.claude&&claude.use)claude.use("downloads").then(function(d){if(!d)return;var b=$("dlb");b.style.display="inline-block";b.onclick=function(){var n=($("fn").value.trim()||"brouillon").replace(/[^\w-]+/g,"-");d.save({filename:"facture-"+n+".html",data:'<!DOCTYPE html><html lang="fr"><meta charset="utf-8"><title>Facture '+esc(n)+'</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px}pre{white-space:pre-wrap;font:inherit}</style><pre>'+esc($("pv").textContent)+'</pre>'}).catch(function(){})}}).catch(function(){})}catch(e){}
+if(!(window.claude&&claude.use)){var b2=$("dlb");b2.style.display="inline-block";b2.onclick=function(){var n=($("fn").value.trim()||"brouillon").replace(/[^\w-]+/g,"-"),h='<!DOCTYPE html><html lang="fr"><meta charset="utf-8"><title>Facture '+esc(n)+'</title><style>body{font:15px/1.6 system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px}pre{white-space:pre-wrap;font:inherit}</style><pre>'+esc($("pv").textContent)+'</pre>',a=document.createElement("a");a.href=URL.createObjectURL(new Blob([h],{type:"text/html"}));a.download="facture-"+n+".html";a.click()}}
+/*P*/
+function num(x){return parseFloat(String(x).replace(/\s/g,"").replace(",","."))}
+function pcsv(t){var s=t.split("\n")[0].indexOf(";")>-1?";":",",r=[],w=[],c="",q=0,i,h;for(i=0;i<t.length;i++){h=t[i];if(q){if(h=='"'){if(t[i+1]=='"'){c+='"';i++}else q=0}else c+=h}else if(h=='"')q=1;else if(h==s){w.push(c);c=""}else if(h=="\n"||h=="\r"){if(h=="\r"&&t[i+1]=="\n")i++;w.push(c);c="";if(w.join("").trim())r.push(w);w=[]}else c+=h}w.push(c);if(w.join("").trim())r.push(w);return r}
+function chk(rows){var H=rows[0].map(function(x){return x.trim().toLowerCase()}),need=["numero","date","echeance","vendeur_nom","vendeur_siren","vendeur_adresse","client_nom","client_siren","client_adresse","categorie","total_ht","taux_tva","total_ttc"],miss=need.filter(function(k){return H.indexOf(k)<0});
+if(miss.length)return{err:"Colonnes manquantes : "+miss.join(", ")};
+var seen={},out=[];rows.slice(1).forEach(function(r,i){var o={},p=[];H.forEach(function(k,j){o[k]=(r[j]||"").trim()});
+need.forEach(function(k){if(!o[k])p.push("« "+k+" » vide")});
+["vendeur_siren","client_siren"].forEach(function(k){if(o[k]&&!/^\d{9}$/.test(o[k].replace(/\s/g,"")))p.push(k+" doit avoir 9 chiffres")});
+if(o.categorie&&!/serv|bien|mixte/i.test(o.categorie))p.push("categorie : services, biens ou mixte");
+if(o.numero){if(seen[o.numero])p.push("numéro en doublon");seen[o.numero]=1}
+if(o.total_ht&&o.taux_tva&&o.total_ttc){var a=num(o.total_ht),b=num(o.taux_tva),c=num(o.total_ttc);if(isNaN(a)||isNaN(b)||isNaN(c))p.push("montants non numériques");else if(Math.abs(a*(1+b/100)-c)>0.02)p.push("TTC incohérent avec HT et TVA")}
+out.push({l:i+2,n:o.numero||"(sans numéro)",p:p})});return{rows:out}}
+/*E*/
+var CODES=["10f0642dcd4418d6c48cafb73382436eb8d445ff50856fcf1dd749d47c07b7f2", "4e041fc5bc5961919cc6ef5700f3ca6a11219533c0f2b65b4ddeb8345978f5a1", "f48552654a9ac07a679cc122760595bdc14cc8f200d5a1eb81d9c8379db07aa8", "c6e0efea4d67df314219e138da35df87b64663d572ff398684d21a9750b422f4", "964cdfdbb38a4a549d72b429d86fa455f9552a9250924eae5620329c8062383c", "c8ce8ff3effcb58500643e660a9e71fe04353a8272abcf44f8fe577f09cf04ae"];
+function sha(x){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(x)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(v){return("0"+v.toString(16)).slice(-2)}).join("")})}
+function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
+function hist(){var H=[];try{H=JSON.parse(ld("bbh")||"[]")}catch(e){}$("his").innerHTML=H.length?H.map(function(x){return"<p class='hint'>"+esc(String(x.d))+" : "+Number(x.o)+" / "+Number(x.n)+" conformes</p>"}).join(""):"<p class='hint'>Aucun contrôle enregistré.</p>"}
+$("unl").onclick=function(){var c=$("ac").value.toUpperCase().replace(/[^A-Z0-9]/g,"");sha(c).then(function(h){if(CODES.indexOf(h)<0){$("lmsg").textContent="Code invalide.";return}
+var k="bba"+h.slice(0,8),t=ld(k),n=Date.now();if(!t){sv(k,String(n));t=n}
+if(n-Number(t)>31*864e5){$("lmsg").textContent="Ce code a expiré. Renouvelez votre abonnement.";return}
+sv("bbc",c);$("lock").style.display="none";$("tool").style.display="block";hist()}).catch(function(){$("lmsg").textContent="Vérification impossible sur ce navigateur."})};
+var last=null;
+function show(res){var el=$("rep");if(res.err||!res.rows.length){el.textContent=res.err||"Aucune ligne de facture trouvée.";$("exp").style.display="none";last=null;return}
+last=res.rows;var ok=res.rows.filter(function(x){return!x.p.length}).length,h="<p><b>"+ok+" / "+res.rows.length+" factures conformes</b></p><div style='overflow-x:auto'><table><tr><th>Ligne</th><th>N°</th><th>Résultat</th></tr>";
+res.rows.forEach(function(x){h+="<tr><td>"+x.l+"</td><td>"+esc(x.n)+"</td><td class='"+(x.p.length?"koc":"okc")+"'>"+(x.p.length?esc(x.p.join(" ; ")):"Conforme")+"</td></tr>"});
+el.innerHTML=h+"</table></div>";$("exp").style.display="inline-block";
+var H=[];try{H=JSON.parse(ld("bbh")||"[]")}catch(e){}H.unshift({d:new Date().toLocaleString("fr-FR"),n:res.rows.length,o:ok});sv("bbh",JSON.stringify(H.slice(0,20)));hist()}
+$("csv").onchange=function(){var f=this.files[0];if(!f)return;var r=new FileReader();r.onload=function(){var t=pcsv(String(r.result).replace(/^\uFEFF/,""));show(t.length?chk(t):{err:"Fichier vide."})};r.readAsText(f)};
+$("exp").onclick=function(){if(!last)return;var q=function(v){v=String(v);if(/^[=+\-@]/.test(v))v="'"+v;return'"'+v.replace(/"/g,'""')+'"'},t="\uFEFFligne;numero;statut;problemes\n"+last.map(function(x){return[x.l,x.n,x.p.length?"A corriger":"Conforme",x.p.join(" | ")].map(q).join(";")}).join("\n"),a=document.createElement("a");a.href=URL.createObjectURL(new Blob([t],{type:"text/csv;charset=utf-8"}));a.download="rapport-baobill.csv";a.click()};
+var sc=ld("bbc");if(sc){$("ac").value=sc;$("unl").onclick()}
 </script>
 </body>
 </html>
